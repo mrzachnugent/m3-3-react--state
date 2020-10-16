@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import LetterKey from "./LetterKey";
 
+import letters from "../data/letters.json";
+
 import { colors, contentWidth } from "./GlobalStyles";
 
-const Keyboard = ({}) => (
+const Keyboard = ({ handler }) => (
   <Wrapper>
-    <LetterKey />
+    {letters.map((letter) => {
+      return <LetterKey value={letter} handler={handler} />;
+    })}
   </Wrapper>
 );
 

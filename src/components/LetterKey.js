@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { colors } from "./GlobalStyles";
 
-const LetterKey = ({}) => {
-  return <Wrapper>a</Wrapper>;
+const LetterKey = ({ value, handler }) => {
+  const [disable, setDisable] = useState(false);
+  return (
+    <Wrapper
+      disabled={disable}
+      onClick={() => {
+        handler(value);
+        setDisable(!disable);
+      }}
+    >
+      {value}
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.button`
