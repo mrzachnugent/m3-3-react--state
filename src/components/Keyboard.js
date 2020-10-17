@@ -6,10 +6,16 @@ import letters from "../data/letters.json";
 
 import { colors, contentWidth } from "./GlobalStyles";
 
-const Keyboard = ({ handler }) => (
+const Keyboard = ({ handler, usedLetters }) => (
   <Wrapper>
     {letters.map((letter) => {
-      return <LetterKey value={letter} handler={handler} />;
+      return (
+        <LetterKey
+          value={letter}
+          handler={handler}
+          isDisabled={usedLetters.includes(letter)}
+        />
+      );
     })}
   </Wrapper>
 );

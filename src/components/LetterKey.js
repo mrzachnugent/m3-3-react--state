@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { colors } from "./GlobalStyles";
 
-const LetterKey = ({ value, handler }) => {
-  const [disable, setDisable] = useState(false);
+const LetterKey = ({ value, handler, isDisabled }) => {
   return (
     <Wrapper
-      disabled={disable}
+      disabled={isDisabled}
       onClick={() => {
         handler(value);
-        setDisable(!disable);
       }}
     >
       {value}

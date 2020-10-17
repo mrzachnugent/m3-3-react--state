@@ -3,11 +3,11 @@ import styled from "styled-components";
 import Button from "./Button";
 import { colors } from "./GlobalStyles";
 
-const GameOverModal = ({ verdict, word, newGame }) => {
+const GameOverModal = ({ game, word, newGame }) => {
   return (
     <Wrapper>
       <Content>
-        <Heading>You {verdict} !!🤩😱</Heading>
+        <Heading>{game.win ? `You Win!! 🤩` : `You Lose!!😱`}</Heading>
         <Word>👉 {word} 👈</Word>
         <Button onClickFunc={newGame}>New Game</Button>
       </Content>

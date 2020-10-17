@@ -8,6 +8,7 @@ import TheWord from "./TheWord";
 import Keyboard from "./Keyboard";
 import GameOverModal from "./GameOverModal";
 import words from "../data/words.json";
+import bodyParts from "../data/body-parts.json";
 
 import { colors, contentWidth } from "./GlobalStyles";
 
@@ -24,6 +25,10 @@ const App = () => {
   const [buttonText, setButtonText] = useState({ str: "Start" });
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [usedLetters, setUsedLetters] = useState([]);
+
+  const showBodyPart = (part, color) => {
+    document.querySelector(`.${part}`).style.stroke = color;
+  };
 
   const getNewWord = () => {
     setWord({
@@ -51,6 +56,7 @@ const App = () => {
     setUsedLetters([...usedLetters, ltr]);
     if (word.str.indexOf(ltr) === -1) {
       setWrongGuesses([...wrongGuesses, ltr]);
+      showBodyPart(bodyParts[wrongGuesses.length], colors.yellow);
     } else {
       for (let i = 0; i < word.str.length; i++) {
         if (word.str[i] === ltr) {
@@ -73,25 +79,26 @@ const App = () => {
   };
 
   const handleReset = () => {
-    setGame({ ...game, started: true, paused: false });
+    setGame({ ...initializeGameState, started: true });
     setWord({ str: "", revealed: [] });
     getNewWord();
     setWrongGuesses([]);
     setUsedLetters([]);
+    bodyParts.forEach((part) => showBodyPart(part, "transparent"));
   };
 
   const handleEndGame = (win) => {
     setGame({ ...game, over: !game.over });
     if (win === true) {
-      setGame({ ...game, win: !game.win });
-      alert(`Game Over! You win`);
-    } else {
-      alert(`Game Over! You loose`);
+      setGame({ ...game, over: !game.over, win: !game.win });
     }
   };
 
   return (
     <Wrapper>
+      {game.over && (
+        <GameOverModal word={word.str} game={game} newGame={handleReset} />
+      )}
       <Header />
       <Nav>
         <Button onClickFunc={handleStart}>{buttonText.str}</Button>
